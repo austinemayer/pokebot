@@ -6,7 +6,6 @@
   "description": "Play Pokémon in a text adventure!",
   "dependencies": {
     "hubot": "^2.15.0",
-    "hubot-diagnostics": "0.0.1",
     "hubot-help": "^0.1.1",
     "hubot-heroku-keepalive": "0.0.4",
     "hubot-redis-brain": "0.0.3",
