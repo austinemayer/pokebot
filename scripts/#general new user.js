@@ -13,8 +13,9 @@
 //  Author:
 //    Andrew Studnicky
 
-module.exports = function newUser (robot) {
-   return robot.enter(function (res) {
-        res.send('Hello, ' + res.message.user.name + '!');	//	Send as a reply to all
+module.exports = function greetUser (robot) {
+   return robot.enter(id:'pokebot.greetUser', function (res) {
+   		console.log(res.send());
+        res.send('Hello, ' + (res.message.user.name).charAt(0).toUpperCase() + '!');	//	Send as a reply to all
     });
 };

@@ -42,9 +42,3 @@ gulp.task('watch', function() {
 
 // Default Task
 gulp.task('default', ['lint-js', 'lint-coffee', 'watch']);
-
-// Just lint the coffee
-gulp.task('coffee', ['lint-coffee', 'watch']);
-
-// Just lint the js
-gulp.task('js', ['lint-js', 'watch']);

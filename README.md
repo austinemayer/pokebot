@@ -6,64 +6,54 @@ Configured for deployment on [Heroku][heroku].
 
 ##  Resources:
 
-[Heroku](heroku)
-[heroku]: http://www.heroku.com
-[Hubot](hubot)
-[hubot]: http://hubot.github.com
-[Hubot Yeoman Generator](generator-hubot)
-[generator-hubot]: https://github.com/github/generator-hubot
+[Heroku](http://www.heroku.com)
+[Hubot](http://hubot.github.com)
+[Hubot Yeoman Generator](https://github.com/github/generator-hubot)
 
 ####    Change adapter
 
-[Hubot Adapters](hubot-adapters)
-[hubot-adapters]: https://github.com/github/hubot/blob/master/docs/adapters.md
+[Hubot Adapters](https://github.com/github/hubot/blob/master/docs/adapters.md)
 
 ####    Deployment help
 
-[Deploy with Node](heroku-node-docs)
-[heroku-node-docs]: http://devcenter.heroku.com/articles/node-js
-[Deploy on Heroku](deploy-heroku)
-[deploy-heroku]: https://github.com/github/hubot/blob/master/docs/deploying/heroku.md
-[Deploy on Unix](deploy-unix)
-[deploy-unix]: https://github.com/github/hubot/blob/master/docs/deploying/unix.md
-[Deploy on Windows](deploy-windows)
-[deploy-windows]: https://github.com/github/hubot/blob/master/docs/deploying/unix.md
+[Deploy with Node](http://devcenter.heroku.com/articles/node-js)
+[Deploy on Heroku](https://github.com/github/hubot/blob/master/docs/deploying/heroku.md)
+[Deploy on Unix](https://github.com/github/hubot/blob/master/docs/deploying/unix.md)()
+[Deploy on Windows](https://github.com/github/hubot/blob/master/docs/deploying/unix.md)
 
 ####    Adding scripts
 
-[Scripting Guide](scripting-docs)
-[scripting-docs]: https://github.com/github/hubot/blob/master/docs/scripting.md
+[Scripting Guide](https://github.com/github/hubot/blob/master/docs/scripting.md)
 
-*Find new scripts with:
-    npm search hubot-scripts ______
+* Find new scripts with:
+>   `npm search hubot-scripts ______`
 
 ####    Troubleshooting
 
 If you're having issues, adding this line to your bin/hubot to see dev debug info
-    export HUBOT_LOG_LEVEL="debug"
+>   `export HUBOT_LOG_LEVEL="debug"`
 
 ## Running Locally via terminal
 
 * Clone the repospity:
-    git clone git@github.com:Studnicky/pokebot.git && cd pokebot
+>   `git clone git@github.com:Studnicky/pokebot.git && cd pokebot`
 
 * Set [environment variables](#configuration):
-    No ENV variables exist yet
+>   No ENV variables exist yet
 
 * Install prereq's _(requires npm and node to be installed globally)_
-    npm install
+>   `npm install`
 
 * To test locally in terminal, start pokebot with gulp:
-    gulp run-local
+>   `gulp run-local`
 
     You'll see some start up output and a prompt:
 
-    [Sat Feb 28 2015 12:38:27 GMT+0000 (GMT)] INFO Using default redis on localhost:xxxx
-    pokebot>
+>   `[Sat Feb 28 2015 12:38:27 GMT+0000 (GMT)] INFO Using default redis on localhost:xxxx`
+>    `pokebot>`
 
 * Talk to pokebot
-    pokebot> pokebot help
-    ...
+>   `pokebot> pokebot help`
 
 ## Extra Configuration
 
@@ -75,12 +65,12 @@ section that explains which values it requires to be placed in which variable.
 When you have lots of scripts installed this process can be quite labour
 intensive. The following shell command can be used as a stop gap until an
 easier way to do this has been implemented.
-
+```
     grep -o 'hubot-[a-z0-9_-]\+' external-scripts.json | \
       xargs -n1 -I {} sh -c 'sed -n "/^# Configuration/,/^#$/ s/^/{} /p" \
           $(find node_modules/{}/ -name "*.coffee")' | \
         awk -F '#' '{ printf "%-25s %s\n", $1, $2 }'
-
+```
 How to set environment variables will be specific to your operating system.
 Rather than recreate the various methods and best practices in achieving this,
 it's suggested that you search for a dedicated guide focused on your OS.
