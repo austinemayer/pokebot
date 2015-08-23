@@ -15,6 +15,7 @@
 
 module.exports = function DMme (robot) {
    return robot.respond(/DM me$/i, function (res) {
-   		robot.messageRoom({room: res.message.user.name}, "Sup?");	//	Send to the user channel
+   	console.log(res.message.room);
+   		robot.messageRoom(res.message.user.name, "Sup?");	//	Send to the user channel
    	});
 };
