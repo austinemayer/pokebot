@@ -6,7 +6,8 @@
 #   wouldn't be useful and amusing enough for day to day huboting.
 #   Uncomment the ones you want to try and experiment with.
 #
-#   These are from the scripting documentation: https://github.com/github/hubot/blob/master/docs/scripting.md
+#   These are from the scripting documentation:
+#   https://github.com/github/hubot/blob/master/docs/scripting.md
 
 module.exports = (robot) ->
 
@@ -32,7 +33,7 @@ module.exports = (robot) ->
   #   res.send "#{res.message.text}? That's a Paddlin'"
   #
   #
-  # enterReplies = ['Hi', 'Target Acquired', 'Firing', 'Hello friend.', 'Gotcha', 'I see you']
+  # enterReplies = ['Hi']
   # leaveReplies = ['Are you still there?', 'Target lost', 'Searching']
   #
   # robot.enter (res) ->
@@ -40,11 +41,11 @@ module.exports = (robot) ->
   # robot.leave (res) ->
   #   res.send res.random leaveReplies
   #
-  # answer = process.env.HUBOT_ANSWER_TO_THE_ULTIMATE_QUESTION_OF_LIFE_THE_UNIVERSE_AND_EVERYTHING
+  # answer = process.env.HUBOT_ANSWER
   #
-  # robot.respond /what is the answer to the ultimate question of life/, (res) ->
+  # robot.respond /what is the answer?/, (res) ->
   #   unless answer?
-  #     res.send "Missing HUBOT_ANSWER_TO_THE_ULTIMATE_QUESTION_OF_LIFE_THE_UNIVERSE_AND_EVERYTHING in environment: please set and try again"
+  #     res.send "Missing HUBOT_ANSWER in environment: please set and try again"
   #     return
   #   res.send "#{answer}, but what is the question?"
   #
