@@ -1,9 +1,16 @@
 {
   "name": "pokebot",
+  "description": "Play Pokémon in a text adventure!",
   "version": "0.0.0",
   "private": true,
-  "author": "a.j.studnicky@gmail.com",
-  "description": "Play Pokémon in a text adventure!",
+  "author": {
+    "name": "Andrew Studnicky",
+    "url": "https://github.com/studnicky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Studnicky/pokebot.git"
+    },
   "dependencies": {
     "coffee-script": "^1.9.3",
     "hubot": "^2.15.0",
