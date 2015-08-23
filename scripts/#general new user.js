@@ -14,8 +14,11 @@
 //    Andrew Studnicky
 
 module.exports = function greetUser (robot) {
-   return robot.enter(function (res) {
-   		console.log(res.send());
+   robot.enter(function (res) {
+   		//	Greet new channel users.
         res.send('Hello, ' + (res.message.user.name).charAt(0).toUpperCase() + res.message.user.name.slice(1) + '!');	//	Send as a reply to all
+    
+        //	This method should be built out to generate new user data in postgres
+
     });
 };

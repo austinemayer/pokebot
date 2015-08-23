@@ -1,7 +1,7 @@
 {
   "name": "pokebot",
   "description": "Play Pokémon in a text adventure!",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "author": {
     "name": "Andrew Studnicky",
@@ -20,7 +20,9 @@
     "hubot-slack": "^3.3.0",
     "pg": "4.4.1"
   },
-  "scripts": {},
+  "scripts": {
+    
+    },
   "engines": {
     "node": "0.10.x"
   },

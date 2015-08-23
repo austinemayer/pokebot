@@ -42,3 +42,5 @@ gulp.task('watch', function() {
 
 // Default Task
 gulp.task('default', ['lint-js', 'lint-coffee', 'watch']);
+
+gulp.task('test', ['lint-js', 'lint-coffee']);
