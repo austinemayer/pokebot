@@ -16,7 +16,7 @@
 
 module.exports = function getInfo (robot) {
 
-   return robot.respond(/info (.*)$/i, id:'pokebot.getInfo', function (res) {
+   return robot.respond(/info (.*)$/i, function (res) {
    		var infoQuery = res.match[1],
    			roomSent = res.message.room,
    			fromWhom = res.message.user.name,
