@@ -30,7 +30,7 @@ Configured for deployment on [Heroku][heroku].
 
 ####    Troubleshooting
 
-If you're having issues, adding this line to your bin/hubot to see dev debug info
+If you're having issues, adding this line to your bin/hubot or Heroku .env file to see dev debug info
 >   `export HUBOT_LOG_LEVEL="debug"`
 
 ## Running Locally via terminal
@@ -39,7 +39,8 @@ If you're having issues, adding this line to your bin/hubot to see dev debug inf
 >   `git clone git@github.com:Studnicky/pokebot.git && cd pokebot`
 
 * Set [environment variables](#configuration):
->   No ENV variables exist yet
+>   `HUBOT_HEROKU_KEEPALIVE_URL = (your heroku app url)`
+>	`HUBOT_SLACK_TOKEN = (your slack API token)`
 
 * Install prereq's _(requires npm and node to be installed globally)_
 >   `npm install`
@@ -54,6 +55,22 @@ If you're having issues, adding this line to your bin/hubot to see dev debug inf
 
 * Talk to pokebot
 >   `pokebot> pokebot help`
+
+
+## Using a local postgres install
+* [Install postgres](http://www.postgresql.org/download/)
+
+* Log in as root
+>	`sudo -u postgres psql`
+
+* Make a new user and database for Pokebot
+>	`postgres=#	CREATE USER pokebot CREATEDB pokebot CREATEUSER PASSWORD 'oak';`
+
+* Exit and log back in as pokebot
+>	`postgres=#	\q`
+>	`psql -h localhost -U pokebot`
+
+##### Database import instructions coming soon
 
 ## Extra Configuration
 

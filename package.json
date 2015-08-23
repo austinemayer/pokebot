@@ -10,7 +10,7 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/Studnicky/pokebot.git"
-    },
+  },
   "dependencies": {
     "coffee-script": "^1.9.3",
     "hubot": "^2.15.0",
@@ -18,11 +18,11 @@
     "hubot-heroku-keepalive": "0.0.4",
     "hubot-redis-brain": "0.0.3",
     "hubot-slack": "^3.3.0",
-    "pg": "4.4.1"
+    "mysql": "^2.9.0",
+    "pg": "^4.4.1",
+    "sequelize": "^3.6.0"
   },
-  "scripts": {
-    
-    },
+  "scripts": {},
   "engines": {
     "node": "0.10.x"
   },
