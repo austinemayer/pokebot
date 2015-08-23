@@ -16,6 +16,6 @@
 module.exports = function greetUser (robot) {
    return robot.enter(function (res) {
    		console.log(res.send());
-        res.send('Hello, ' + (res.message.user.name).charAt(0).toUpperCase() + '!');	//	Send as a reply to all
+        res.send('Hello, ' + (res.message.user.name).charAt(0).toUpperCase() + res.message.user.name.slice(1) + '!');	//	Send as a reply to all
     });
 };
