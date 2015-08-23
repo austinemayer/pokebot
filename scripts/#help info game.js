@@ -17,8 +17,8 @@
 module.exports = function getInfo (robot) {
 
 	robot.respond(/info$/i, function (res) {
-		console.log(res.message.room);
-		if (res.message.room == "#help"){
+		console.log(res.message);
+		if (res.message.room == "help"){
 			var topics = ["me"];
 		
 			res.reply("I can certainly help! Just tell me what you need info on.\n");
@@ -34,7 +34,7 @@ module.exports = function getInfo (robot) {
 		var infoQuery = res.match[1].trim(),
 			fromWhom = res.message.user.name;
 
-		if (res.message.room == "#help"){
+		if (res.message.room == "help"){
 			switch (infoQuery) {
 				case "me":
 					var roomSent = res.message.room,
