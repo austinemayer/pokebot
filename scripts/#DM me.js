@@ -8,7 +8,7 @@
 //		None
 //
 //  Commands:
-//		DM me - tell Oak to DM you
+//		pokebot DM me - tell Oak to DM you
 //
 //  Author:
 //    Andrew Studnicky
