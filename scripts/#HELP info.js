@@ -8,8 +8,7 @@
 //		None
 //
 //  Commands:
-//		pokebot info - \t\tShow a list of available info topics
-//		pokebot info <query> - \t\tGet info about the topic specified
+//		pokebot info - 			Show a list of available info topics
 //
 //  Author:
 //    Andrew Studnicky
@@ -17,7 +16,7 @@
 module.exports = function getInfo (robot) {
 
 	robot.respond(/info$/i, function (res) {
-		console.log(res.message);
+
 		if (res.message.room == "help"){
 			var topics = ["me"];
 		
@@ -28,9 +27,11 @@ module.exports = function getInfo (robot) {
 		} else {
    			robot.messageRoom('#help', "Let's talk here, @" + (res.message.user.name).charAt(0).toUpperCase() + res.message.user.name.slice(1) + ".");
 		}
+		
 	});
 
 	robot.respond(/info (.*)$/i, function (res) {
+
 		var infoQuery = res.match[1].trim(),
 			fromWhom = res.message.user.name;
 
@@ -48,5 +49,7 @@ module.exports = function getInfo (robot) {
 		} else {
    			robot.messageRoom('#help', "Let's talk here, @" + (res.message.user.name).charAt(0).toUpperCase() + res.message.user.name.slice(1) + ".");
 		}
+
 	});
+
 };
