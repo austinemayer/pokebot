@@ -23,7 +23,7 @@ module.exports = function pokedex(robot) {
 		if (res.message.room == "pokedex" || res.message.room == res.message.user.name) {
 
 			//	Get the user query
-			var pokemon = res.match[1].trim();
+			var pokemon = res.match[1].trim().toLowerCase();
 
 			if (pokemon.length > 0) {
 				var endPoint = 'http://pokeapi.co/api/v1/pokemon/' + pokemon;
