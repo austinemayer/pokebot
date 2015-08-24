@@ -87,7 +87,7 @@ function parseReply(json) {
 						count++;
 					} while(count < bar_len);
 					if (obj[key].length < 14){tabs += "\t";}
-					data += '*' + obj[key] + '*:' + tabs + pokemonData[key] + '\t' + bar + '\n\n';
+					data += '*' + obj[key] + '*:' + tabs + pokemonData[key] + '\n' + bar + '\n\n';
 				}});
 			return (data);
 		}
