@@ -7,7 +7,9 @@ Configured for deployment on [Heroku][heroku].
 ##  Resources:
 
 [Heroku](http://www.heroku.com)
+
 [Hubot](http://hubot.github.com)
+
 [Hubot Yeoman Generator](https://github.com/github/generator-hubot)
 
 ####    Change adapter
@@ -17,8 +19,11 @@ Configured for deployment on [Heroku][heroku].
 ####    Deployment help
 
 [Deploy with Node](http://devcenter.heroku.com/articles/node-js)
+
 [Deploy on Heroku](https://github.com/github/hubot/blob/master/docs/deploying/heroku.md)
-[Deploy on Unix](https://github.com/github/hubot/blob/master/docs/deploying/unix.md)()
+
+[Deploy on Unix](https://github.com/github/hubot/blob/master/docs/deploying/unix.md)
+
 [Deploy on Windows](https://github.com/github/hubot/blob/master/docs/deploying/unix.md)
 
 ####    Adding scripts
@@ -30,7 +35,7 @@ Configured for deployment on [Heroku][heroku].
 
 ####    Troubleshooting
 
-If you're having issues, adding this line to your bin/hubot or Heroku .env file to see dev debug info
+If you're having issues, adding this line to your bin/hubot or Heroku .env file to see dev debug info:
 >   `export HUBOT_LOG_LEVEL="debug"`
 
 ## Running Locally via terminal
@@ -40,6 +45,7 @@ If you're having issues, adding this line to your bin/hubot or Heroku .env file 
 
 * Set [environment variables](#configuration):
 >   `HUBOT_HEROKU_KEEPALIVE_URL = (your heroku app url)`
+
 >	`HUBOT_SLACK_TOKEN = (your slack API token)`
 
 * Install prereq's _(requires npm and node to be installed globally)_
@@ -66,8 +72,10 @@ If you're having issues, adding this line to your bin/hubot or Heroku .env file 
 * Make a new user and database for Pokebot
 >	`postgres=#	CREATE USER pokebot CREATEDB pokebot CREATEUSER PASSWORD 'oak';`
 
-* Exit and log back in as pokebot
+* Exit and log back in as pokebot:
+
 >	`postgres=#	\q`
+
 >	`psql -h localhost -U pokebot`
 
 ##### Database import instructions coming soon
