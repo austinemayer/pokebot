@@ -32,16 +32,17 @@ module.exports = function DMme (robot) {
 		//	This method should be used for presenting data not desired in the main channels.
 
 		//	Generate an instance based on the user model
-		var studs = User.build({
+
+		var this_user = User.build({
 			slack_id: res.message.user.id,
 			slack_name: res.message.user.name,
 			slack_role: "user"
 		});
 
 		//	Save the instance to the database
-		studs.save()
+		this_user.save()
 		.then(function(){
-
+			robot.messageRoom(res.message.user.name, "User saves as: " + this_user);
 		})
 		.catch(function(error){
 			robot.messageRoom(res.message.user.name, "Welp... that happened.\n" + error);
