@@ -58,8 +58,8 @@ module.exports = function pokedex(robot) {
 			}
 		}
 	});
-};
-
+	
+	
 //	Function local only to this file, doesn't get exported
 function parseReply(json) {
 
@@ -97,4 +97,7 @@ function parseReply(json) {
 		}
 	});
 	return (data);
+
+	
 }
+};
