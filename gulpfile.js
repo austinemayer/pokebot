@@ -13,7 +13,7 @@ var shell = require('gulp-shell');
 
 // Lint all custom JS files with jshint
 gulp.task('lint-js', function() {
-    return gulp.src(['scripts/*.js', 'models/*.js'],{base: '/'})
+    return gulp.src('scripts/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 });
@@ -34,7 +34,7 @@ gulp.task('run-local', shell.task([
 // Watch Files For Changes
 gulp.task('watch', function() {
     gulp.watch('scripts/*.js', ['lint-js']);
-    gulp.watch('models/*.js', ['lint-js']);
+    gulp.watch('scripts/models/*.js', ['lint-js']);
     gulp.watch('scripts/*.coffee', ['lint-coffee']);
 });
 
