@@ -1,17 +1,17 @@
-//  Description:
-//    Return information about selected topics
+//	Description:
+//	Return information about selected topics
 //
-//  Dependencies:
-//		None
+//	Dependencies:
+//	None
 //
-//  Configuration:
-//		None
+//	Configuration:
+//	None
 //
-//  Commands:
-//		pokebot info - 			Show a list of available info topics
+//	Commands:
+//	pokebot info -          Show a list of available info topics
 //
-//  Author:
-//    Andrew Studnicky
+//	Author:
+//	Andrew Studnicky
 
 module.exports = function getInfo (robot) {
 
@@ -25,7 +25,7 @@ module.exports = function getInfo (robot) {
 				res.send("•\t" + element + "\n");
 			});
 		} else {
-   			robot.messageRoom('#help', "Let's talk here, @" + (res.message.user.name).charAt(0).toUpperCase() + res.message.user.name.slice(1) + ".");
+			robot.messageRoom('#help', "Let's talk here, @" + (res.message.user.name).charAt(0).toUpperCase() + res.message.user.name.slice(1) + ".");
 		}
 		
 	});
@@ -39,7 +39,7 @@ module.exports = function getInfo (robot) {
 			switch (infoQuery) {
 				case "me":
 					var roomSent = res.message.room,
-					fromWhomID = res.message.user.id;
+						fromWhomID = res.message.user.id;
 					res.send('Your userID is ' + fromWhomID + ', and you just asked about *' + infoQuery + '* in the ' + roomSent + ' channel.');
 				break;
 				default:
@@ -47,7 +47,7 @@ module.exports = function getInfo (robot) {
 				break;
 			}
 		} else {
-   			robot.messageRoom('#help', "Let's talk here, @" + (res.message.user.name).charAt(0).toUpperCase() + res.message.user.name.slice(1) + ".");
+			robot.messageRoom('#help', "Let's talk here, @" + (res.message.user.name).charAt(0).toUpperCase() + res.message.user.name.slice(1) + ".");
 		}
 
 	});
