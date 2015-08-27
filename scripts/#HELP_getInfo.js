@@ -12,12 +12,12 @@
 //
 //	Author:
 //	Andrew Studnicky
-
+ 
 module.exports = function getInfo (robot) {
 
 	robot.respond(/info$/i, function (res) {
 
-		if (res.message.room == "help"){
+		if (res.message.room == "help" || res.message.room == res.message.user.name){
 			var topics = ["me"];
 		
 			res.reply("I can certainly help! Just tell me what you need info on.\n");
@@ -32,18 +32,15 @@ module.exports = function getInfo (robot) {
 
 	robot.respond(/info (.*)$/i, function (res) {
 
-		var infoQuery = res.match[1].trim(),
-			fromWhom = res.message.user.name;
+		var infoQuery = res.match[1].trim();
 
-		if (res.message.room == "help"){
+		if (res.message.room == "help" || res.message.room == res.message.user.name){
 			switch (infoQuery) {
 				case "me":
-					var roomSent = res.message.room,
-						fromWhomID = res.message.user.id;
-					res.send('Your userID is ' + fromWhomID + ', and you just asked about *' + infoQuery + '* in the ' + roomSent + ' channel.');
+					res.send('Your userID is ' + res.message.user.id + ', and you just asked about *' + infoQuery + '* in the ' + res.message.room + ' channel.');
 				break;
 				default:
-					res.reply('I\'m sorry, ' + fromWhom + ', I can\'t tell you about  *' + infoQuery + '* right now.');
+					res.reply('I\'m sorry, ' + res.message.user.name + ', I can\'t tell you about  *' + infoQuery + '* right now.');
 				break;
 			}
 		} else {

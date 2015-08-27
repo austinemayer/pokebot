@@ -21,8 +21,8 @@ module.exports = function pokedex(robot) {
 		//	Only do this in the pokedex channel or DM
 		if (res.message.room == "pokedex" || res.message.room == res.message.user.name) {
 
-			//	Get the user query
-			var pokemon = res.match[1].trim().toLowerCase();
+			//	Get the user query, remove colons so people can use the emotes for fun
+			var pokemon = res.match[1].replace(/:$/,'').toLowerCase().trim();
 
 			if (pokemon.length > 0) {
 				var endPoint = 'http://pokeapi.co/api/v1/pokemon/' + pokemon;

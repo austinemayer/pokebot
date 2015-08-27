@@ -24,7 +24,8 @@ var Sequelize = require('sequelize'),	//	require node module containing class ex
 		sequelize: sequelize,
 		
 		//  Define models from script files
-		User:      sequelize.import(__dirname + '/user_model.js')
+		User: 		sequelize.import(__dirname + '/user_model.js'),
+		Pokemon:	sequelize.import(__dirname + '/pokemon_model.js')
 	};
 
 	/* Associations go here */
