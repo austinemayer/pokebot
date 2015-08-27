@@ -44,9 +44,8 @@ module.exports = function tallGrass (robot) {
 			types: [{"type": "flying"},{"type": "normal"}]
 		});
 
-		robot.messageRoom('general', "A wild :" + this_pokemon.name + ": " + this_pokemon.name + " has appeared!");
-
-		console.log(this_pokemon);
+		robot.messageRoom('general', "A wild :" + this_pokemon.name.toLowerCase() + ": " + this_pokemon.name + " has appeared!");
+		robot.messageRoom('general', this.pokemon);
 
 		//	Save the instance to the database
 		this_pokemon.save()
