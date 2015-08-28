@@ -1,5 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
-	var User = sequelize.define('User', {
+	var User;
+	User = sequelize.define('User', {
 		slack_id: {
 			type: Sequelize.STRING,
 			primaryKey: true,

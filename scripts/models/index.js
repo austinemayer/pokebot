@@ -1,23 +1,19 @@
 var Sequelize = require('sequelize'),	//	require node module containing class export
 	sequelize = null,					//	initialize sequelize instance to null
-	postgres = {};						//	initialize empty reference to postgres postgres
+	postgres = {};						//	initialize empty reference to postgres
 
 //	Requires recommended for automating import and associations...
 //	fs = require('fs');
 //	path = require('path');
 
-	//	Define database connection config on remote
-	if (process.env.DATABASE_URL) {
-		sequelize = new Sequelize(process.env.DATABASE_URL, {
-			dialect:  'postgres',
-			protocol: 'postgres',
-			logging:  true //false
-		});
-	} else {
-	//	Use local machine settings otherwise
-		sequelize = new Sequelize('postgres://pokebot:oak@localhost:5432/pokebot');
-	}
+	//	Define database connection from env variable, default to local if not present
+	var database_uri = process.env.DATABASE_URL || 'postgres://pokebot:oak@localhost:5432/pokebot';
 
+	sequelize = new Sequelize(database_uri, {
+			dialect:  'postgres',
+			protocol: 'postgres'
+	});
+	
 	//	Create reference object
 	postgres = {
 		Sequelize: Sequelize,
@@ -33,7 +29,7 @@ var Sequelize = require('sequelize'),	//	require node module containing class ex
 
 //	Pattern for reading all models from directory and adding
 	// fs.readdirSync(__dirname).filter(function(file) {
-	// 	return file.indexOf('.') !== 0 && file !== 'index.coffee';
+	// 	return file.indexOf('.') !== 0 && file !== 'index.js';
 	// }).forEach(function(file) {
 	// 	var model;
 	// 	model = sequelize["import"](path.join(__dirname, file));
@@ -46,4 +42,4 @@ var Sequelize = require('sequelize'),	//	require node module containing class ex
 	// 	}
 	// });
 
-	module.exports = postgres;
+module.exports = postgres;

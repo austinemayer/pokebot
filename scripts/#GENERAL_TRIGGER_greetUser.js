@@ -1,17 +1,17 @@
 //	Description:
-//	Greet new users and prompt them to pick a starter Pokémon
+//		Greet new users and prompt them to pick a starter Pokémon
 //
 //	Dependencies:
-//	postgress
+//		postgress
 //
 //	Configuration:
-//	None
+//		None
 //
 //	Commands:
-//	None
+//		None
 //
 //	Author:
-//	Andrew Studnicky
+//		Andrew Studnicky
 
 module.exports = function greetUser (robot) {
 

@@ -8,25 +8,24 @@
 //	None
 //
 //	Commands:
-//	pokebot tall grass - spawn a wild pokemon
+//	tall grass - spawn a wild pokemon
 //
 //	Author:
 //	Andrew Studnicky
 
 
-//	Define required modules
-var request = require('request')
+//	Define required modules -- I don't feel like this should be global but why does this crash if I scope it?
 Sequelize = require('sequelize');
 
 //	Define requires data models
 var Models = require('./models'),
-Pokemon = Models.Pokemon;
+	Pokemon = Models.Pokemon;
 
 module.exports = function tallGrass (robot) {
 
-	robot.respond(/(tall grass|tallgrass)$/i, function (res) {
+	robot.respond(/(tall\s*grass)$/i, function (res) {
 
-
+		//	Logic here to select pokemon from appropriate scope
 		var this_pokemon = Pokemon.build({
 			abilities: [{"name": "glitch"}],
 			attack: 136,
@@ -37,7 +36,7 @@ module.exports = function tallGrass (robot) {
 			male_female_ratio: 0,
 			movelist: {},
 			name: "Missingno",
-			national_id: 000,
+			national_id: 0,
 			sp_atk: 6,
 			sp_def: 6,
 			speed: 0,
@@ -45,8 +44,6 @@ module.exports = function tallGrass (robot) {
 		});
 
 		robot.messageRoom('general', "A wild :" + this_pokemon.name + ": " + this_pokemon.name + " has appeared!");
-
-		console.log(this_pokemon);
 
 		//	Save the instance to the database
 		this_pokemon.save()
