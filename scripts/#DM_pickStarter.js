@@ -89,9 +89,7 @@ module.exports = function starter (robot) {
 					var starters = getAllStarters();
 
 					//	Capitalize the input or it will fail check
-					selected = selected.charAt(0).toUpperCase() + selected.slice(1);
-
-					if (starters.indexOf(selected) != -1){
+					if (starters.indexOf(selected.charAt(0).toUpperCase() + selected.slice(1)) != -1){
 
 					//	TODO: Store result into user_pokemon table!!!
 
