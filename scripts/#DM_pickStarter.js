@@ -65,7 +65,7 @@ module.exports = function starter (robot) {
 					var starters = getStartersByGen(gen);
 
 					starters.forEach(function(pokemon){
-						res.send("•\t:" + pokemon + ": " + pokemon + " \n");
+						res.send("•\t:" + pokemon.toLower() + ": " + pokemon + " \n");
 					});
 
 				})();
@@ -77,7 +77,7 @@ module.exports = function starter (robot) {
 					var starters = getAllStarters();
 					res.send("All starter pokemon available are: \n");
 					starters.forEach(function(pokemon){
-						res.send("•\t:" + pokemon + ": " + pokemon + " \n");
+						res.send("•\t:" + pokemon.toLower() + ": " + pokemon + " \n");
 					});
 
 				})();
@@ -95,6 +95,8 @@ module.exports = function starter (robot) {
 
 					//	TODO: Store result into user_pokemon table!!!
 
+
+					res.send("You've selected :" + selected.toLower() + ": " + selected + " as your starter pokemon.\nGreat choice, " + res.message.user.name + "!");
 					} else {
 						res.send("I\'m sorry, " + res.message.user.name + ", but " + selected + " is not available.");
 					}
