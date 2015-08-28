@@ -104,7 +104,7 @@ module.exports = function starter (robot) {
 				})();
 				break;
 				default:
-				var topics = ["list generations", "list <generation number or 'all'>", "pick <pokemon>"];
+				var topics = ["starter list generations", "starter list <generation number or 'all'>", "starter pick <pokemon>"];
 
 				res.reply("Use the following commands to pick your starter pokemon.\n");
 				topics.forEach(function(element){
