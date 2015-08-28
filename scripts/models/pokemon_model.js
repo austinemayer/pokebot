@@ -1,5 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
-	var Pokemon = sequelize.define('Pokemon', {
+	var Pokemon;
+	Pokemon = sequelize.define('Pokemon', {
 		abilities: {
 			type: Sequelize.JSON,
 			allowNull: false,
