@@ -8,20 +8,21 @@
 //	None
 //
 //	Commands:
-//	tall grass - spawn a wild pokemon
+//	hubot tall grass      - spawn a wild pokemon
 //
 //	Author:
 //	Andrew Studnicky
 
-
-//	Define required modules -- I don't feel like this should be global but why does this crash if I scope it?
-Sequelize = require('sequelize');
-
-//	Define requires data models
-var Models = require('./models'),
-	Pokemon = Models.Pokemon;
-
 module.exports = function tallGrass (robot) {
+
+	//	Define required modules
+	var Sequelize = require('sequelize');
+
+	//	Define requires data models
+	var Models = require('./models'),
+		User = Models.User,
+		Pokemon = Models.Pokemon
+		User_Pokemon = Models.User_Pokemon;
 
 	robot.respond(/(tall\s*grass)$/i, {id: 'tallGrass'}, function (res) {
 

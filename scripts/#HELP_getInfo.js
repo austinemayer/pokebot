@@ -8,7 +8,7 @@
 //	None
 //
 //	Commands:
-//	info -          Show a list of available info topics
+//	hubot info            - Show a list of available info topics
 //
 //	Author:
 //	Andrew Studnicky

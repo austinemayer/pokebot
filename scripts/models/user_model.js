@@ -1,4 +1,4 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, Sequelize) {
 	var User;
 	User = sequelize.define('User', {
 		slack_id: {
@@ -29,7 +29,12 @@ module.exports = function(sequelize, DataTypes) {
 	});
 
 	//	This will force drop on the table if it exists.
-	User.sync({force: true}).then(function () {
+	User.sync({force: true}, function(err){
+		if(err){
+			console.error(err);
+			return process.exit(1); 
+		}
+	}).then(function () {
 		//	Table created - Force insert my user object for testing
 		return User.create({
 			slack_id: 'U09EUDR7G',
@@ -37,6 +42,7 @@ module.exports = function(sequelize, DataTypes) {
 			slack_role: 'admin'
 		});
 	});
+
 
 	return User;
 };

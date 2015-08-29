@@ -8,18 +8,18 @@
 //		None
 //
 //	Commands:
-//		DM me - tell Oak to DM you
+//		hubot dm me           - tell Oak to DM you
 //
 //	Author:
 //		Andrew Studnicky
 
 module.exports = function dmMe (robot) {
 
-//	Define required modules
-var request = require('request');
+	//	Define required modules
+	var request = require('request');
 
 
-	robot.respond(/DM me$/i, function (res) {
+	robot.respond(/DM\s*me$/i, {id: 'dmMe'}, function (res) {
 
 		//	Demo of sending DM to a user from a response.
 		//	Send to the user channel (A room with channel of user's name is considered DM)

@@ -1,4 +1,4 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, Sequelize) {
 	var User_Pokemon;
 	User_Pokemon = sequelize.define('User_Pokemon', {
 		caught_by: {
@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
 			hasComment: {type: Sequelize.STRING, field: "Pokemon current experience"}
 		},
 		gender: {
-			type: Sequelize.INT,
+			type: Sequelize.INTEGER,
 			allowNull: false,
 			hasComment: {type: Sequelize.STRING, field: "Pokemon current experience"}
 		},

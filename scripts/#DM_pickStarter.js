@@ -8,7 +8,7 @@
 //		None
 //
 //  Commands:
-//		 starter - Choose your starting pokemon.
+//		 hubot starter         - Choose your starting pokemon.
 //
 //  Author:
 //    Austin Mayer
@@ -24,10 +24,18 @@
 //	Otherwise users may be able to intercept each other's starter script
 
 //	Figure out how to de-register listeners using middleware and listener metadata
-//	Otherwise oak will reply any time he hears these pokemon's names, which is bad.
 //	https://github.com/github/hubot/blob/master/docs/scripting.md#listener-metadata
 
 module.exports = function starter (robot) {
+
+	//	Define required modules
+	var Sequelize = require('sequelize');
+
+	//	Define requires data models
+	var Models = require('./models'),
+		User = Models.User,
+		Pokemon = Models.Pokemon
+		User_Pokemon = Models.User_Pokemon;
 
 	robot.respond(/starter(.*)$/i, {id: 'starter.init'}, function (res) {
 
@@ -93,23 +101,23 @@ module.exports = function starter (robot) {
 
 					//	TODO: Store result into user_pokemon table!!!
 
-						res.send("You've selected :" + selected.toLowerCase() + ": " + selected + " as your starter pokemon.\nGreat choice, " + res.message.user.name + "!");
-					} else {
-						res.send("I\'m sorry, " + res.message.user.name + ", but " + selected + " is not available.");
-					}
+					res.send("You've selected :" + selected.toLowerCase() + ": " + selected + " as your starter pokemon.\nGreat choice, " + res.message.user.name + "!");
+				} else {
+					res.send("I\'m sorry, " + res.message.user.name + ", but " + selected + " is not available.");
+				}
 
-				})();
-				break;
-				default:
-				var topics = ["starter list generations", "starter list <generation number or 'all'>", "starter pick <pokemon>"];
+			})();
+			break;
+			default:
+			var topics = ["starter list generations", "starter list <generation number or 'all'>", "starter pick <pokemon>"];
 
-				res.reply("Use the following commands to pick your starter pokemon.\n");
-				topics.forEach(function(element){
-					res.send("•\t" + element + "\n");
-				});
-			}
+			res.reply("Use the following commands to pick your starter pokemon.\n");
+			topics.forEach(function(element){
+				res.send("•\t" + element + "\n");
+			});
 		}
-	});
+	}
+});
 
 function getGenList(){
 
@@ -147,40 +155,40 @@ function getAllStarters(){
 	//	TODO: Retrieve starters from database
 	var starter_options = [
 	{gen: "Other Starters", starters: [
-		{name: "Pikachu", national_id: 25},
-		{name: "Eevee", national_id: 133},
-		{name: "Marill", national_id: 183},
-		{name: "Ralts", national_id: 280}
+	{name: "Pikachu", national_id: 25},
+	{name: "Eevee", national_id: 133},
+	{name: "Marill", national_id: 183},
+	{name: "Ralts", national_id: 280}
 	]},
 	{gen: "1st Generation", starters: [
-		{name: "Bulbasaur", national_id: 1},
-		{name: "Charmander", national_id: 4},
-		{name: "Squirtle", national_id: 7}
+	{name: "Bulbasaur", national_id: 1},
+	{name: "Charmander", national_id: 4},
+	{name: "Squirtle", national_id: 7}
 	]},
 	{gen: "2nd Generation", starters: [
-		{name: "Chikorita", national_id: 152},
-		{name: "Cyndaquil", national_id: 155},
-		{name: "Totodile", national_id: 158}
+	{name: "Chikorita", national_id: 152},
+	{name: "Cyndaquil", national_id: 155},
+	{name: "Totodile", national_id: 158}
 	]},
 	{gen: "3rd Generation", starters: [
-		{name: "Treecko", national_id: 252},
-		{name: "Torchic", national_id: 255},
-		{name: "Mudkip", national_id: 258}
+	{name: "Treecko", national_id: 252},
+	{name: "Torchic", national_id: 255},
+	{name: "Mudkip", national_id: 258}
 	]},
 	{gen: "4th Generation", starters: [
-		{name: "Turtwig", national_id: 387},
-		{name: "Chimchar", national_id: 390},
-		{name: "Piplup", national_id: 393}
+	{name: "Turtwig", national_id: 387},
+	{name: "Chimchar", national_id: 390},
+	{name: "Piplup", national_id: 393}
 	]},
 	{gen: "5th Generation", starters: [
-		{name: "Snivy", national_id: 495},
-		{name: "Tepig", national_id: 498},
-		{name: "Oshawott", national_id: 501}
+	{name: "Snivy", national_id: 495},
+	{name: "Tepig", national_id: 498},
+	{name: "Oshawott", national_id: 501}
 	]},
 	{gen: "6th Generation", starters: [
-		{name: "Chespin", national_id: 650},
-		{name: "Fennekin", national_id: 653},
-		{name: "Froakie", national_id: 656}
+	{name: "Chespin", national_id: 650},
+	{name: "Fennekin", national_id: 653},
+	{name: "Froakie", national_id: 656}
 	]}
 	];
 

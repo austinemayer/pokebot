@@ -1,4 +1,4 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, Sequelize) {
 	var Pokemon;
 	Pokemon = sequelize.define('Pokemon', {
 		abilities: {
@@ -98,6 +98,7 @@ module.exports = function(sequelize, DataTypes) {
 		deletedAt: 'deleted_at',
 		tableName: 'pokemon'
 	});
+
 
 	//	This will force drop on the table if it exists.
 	Pokemon.sync({force: true}).then(function () {

@@ -8,7 +8,7 @@
 //	None
 //
 //	Commands:
-//	pokedex <query> - Return pokedex data from pokeapi.com by name or pokedex number
+//	hubot pokedex <query> - Return pokedex data from pokeapi.com by name or national pokedex number
 //
 //	Author:
 //	Andrew Studnicky
