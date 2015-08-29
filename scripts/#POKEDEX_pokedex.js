@@ -13,6 +13,10 @@
 //	Author:
 //	Andrew Studnicky
 
+//	Refer here for how to make Hubot send preformatted attachments:
+//	https://github.com/inkel/hubot-slack-attachment
+//	https://api.slack.com/docs/attachments
+
 module.exports = function pokedex(robot) {
 
 var request = require('request');
@@ -76,12 +80,12 @@ var request = require('request');
 		data += '\n\n';
 		//	Make power level bars for stats because they're fun!
 		[	//	Dict obj sets display strings for keys
-		{attack:"Attack"},
-		{defense:"Defense"},
-		{hp:"Hit points"},
-		{speed:"Speed"},
-		{sp_def:"Special Defense"},
-		{sp_atk:"Special Attack"}
+			{attack:"Attack"},
+			{defense:"Defense"},
+			{hp:"Hit points"},
+			{speed:"Speed"},
+			{sp_def:"Special Defense"},
+			{sp_atk:"Special Attack"}
 		].map(function(obj){
 			//	Iterate desired keys, generate string with ASCII powerbar
 			for (var key in obj){

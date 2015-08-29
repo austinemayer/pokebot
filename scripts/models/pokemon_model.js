@@ -29,6 +29,12 @@ module.exports = function(sequelize, DataTypes) {
 			hasComment: {type: Sequelize.STRING, field: "Possible evolutions as JSON object"},
 			fieldWithUnderscores: { type: Sequelize.STRING, field: "evolutions_json" }
 		},
+		growth_rate: {
+			type: Sequelize.JSON,
+			allowNull: false,
+			hasComment: {type: Sequelize.STRING, field: "Pokemon growth rate formula"},
+			fieldWithUnderscores: { type: Sequelize.STRING, field: "growth_rate" }
+		},
 		hp: {
 			type: Sequelize.INTEGER,
 			allowNull: false,

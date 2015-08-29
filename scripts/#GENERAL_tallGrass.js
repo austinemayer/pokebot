@@ -32,6 +32,7 @@ module.exports = function tallGrass (robot) {
 			catch_rate: 0,
 			defense: 0,
 			evolutions: {},
+			growth_rate: {},
 			hp: 33,
 			male_female_ratio: 0,
 			movelist: {},

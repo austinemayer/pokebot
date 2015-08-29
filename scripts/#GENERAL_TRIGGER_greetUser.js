@@ -22,6 +22,9 @@ module.exports = function greetUser (robot) {
 		//	DM the user to start the initialization script
 		robot.messageRoom(res.message.user.name, "Let's get started, " + (res.message.user.name).charAt(0).toUpperCase() + res.message.user.name.slice(1) + "! Type \"pick starter\" to get your first pokemon!");
 
+		//	Refer here for how to foprce open an IM
+		//	https://api.slack.com/methods/im.open
+
 	});
 
 };
