@@ -30,6 +30,11 @@ module.exports = function(sequelize, Sequelize) {
 			hasComment: {type: Sequelize.STRING, field: "Possible evolutions as JSON object"},
 			fieldWithUnderscores: { type: Sequelize.STRING, field: "evolutions_json" }
 		},
+		gen: {
+			type: Sequelize.INTEGER,
+			allowNull: false,
+			hasComment: {type: Sequelize.STRING, field: "Pokemon Generation"}
+		},
 		growth_rate: {
 			type: Sequelize.JSON,
 			allowNull: false,
@@ -40,6 +45,12 @@ module.exports = function(sequelize, Sequelize) {
 			type: Sequelize.INTEGER,
 			allowNull: false,
 			hasComment: {type: Sequelize.STRING, field: "Health Points"}
+		},
+		is_starter: {
+			type: Sequelize.BOOLEAN,
+			allowNull: false,
+			hasComment: {type: Sequelize.STRING, field: "Is this an available starter pokemon?"},
+			fieldWithUnderscores: { type: Sequelize.STRING, field: "is_starter" }
 		},
 		male_female_ratio: {
 			type: Sequelize.REAL,
@@ -66,7 +77,7 @@ module.exports = function(sequelize, Sequelize) {
 			allowNull: false,
 			unique: true,
 			hasComment: {type: Sequelize.STRING, field: "Unique Pokedex ID (National index)"},
-			fieldWithUnderscores: { type: Sequelize.STRING, field: "pokedex_id" }
+			fieldWithUnderscores: { type: Sequelize.STRING, field: "national_id" }
 		},
 		sp_atk: {
 			type: Sequelize.INTEGER,

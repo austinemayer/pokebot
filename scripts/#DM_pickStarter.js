@@ -49,7 +49,7 @@ module.exports = function starter (robot) {
 		var userQuery = res.match[1].trim() || "";
 		var replyMessage = '';
 
-		//	Play regexplinko with the response...
+		//	Play regexplinko with the response to build the reply message...
 		switch (true) {
 			case (/(^list\s*generations)/ig).test(userQuery):
 				//	Get the list of generations
@@ -114,7 +114,7 @@ module.exports = function starter (robot) {
 				replyMessage += "•\t" + element + "\n";
 			});
 		}
-
+		//	Send the reply message.
 		res.send(replyMessage);
 	}
 });
