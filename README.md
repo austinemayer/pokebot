@@ -35,52 +35,92 @@ Configured for deployment on [Heroku][heroku].
 [Scripting Guide](https://github.com/github/hubot/blob/master/docs/scripting.md)
 
 * Find new scripts with:
->   `npm search hubot-scripts ______`
+```
+npm search hubot-scripts ______
+```
 
 ####    Troubleshooting
 
-If you're having issues, adding this line to your bin/hubot or Heroku .env file to see dev debug info:
->   `export HUBOT_LOG_LEVEL="debug"`
+>	If you're having issues, adding this line to your bin/hubot or Heroku .env file to see dev debug info:
+```
+export HUBOT_LOG_LEVEL="debug"
+```
 
 ## Running Locally via terminal
 
 * Clone the repospity:
->   `git clone git@github.com:Studnicky/pokebot.git && cd pokebot`
+```
+git clone git@github.com:Studnicky/pokebot.git && cd pokebot
+```
 
 * Set [environment variables](#configuration):
->   `HUBOT_HEROKU_KEEPALIVE_URL = (your heroku app url)`
-
->	`HUBOT_SLACK_TOKEN = (your slack API token)`
+```
+HUBOT_HEROKU_KEEPALIVE_URL = (your heroku app url)
+HUBOT_SLACK_TOKEN = (your slack API token)
+```
 
 * Install prereq's _(requires npm and node to be installed globally)_
->   `npm install`
+```
+npm install
+```
 
 * To test locally in terminal, start pokebot with gulp:
->   `gulp run-local`
+```
+gulp run-local
+```
 
-    You'll see some start up output and a prompt:
+> You should see some start up output and a prompt. If not, you broke it.
+```
+[Sat Feb 28 2015 12:38:27 GMT+0000 (GMT)] INFO Using default redis on localhost:xxxx
+pokebot>
+```
 
->   `[Sat Feb 28 2015 12:38:27 GMT+0000 (GMT)] INFO Using default redis on localhost:xxxx`
->    `pokebot>`
-
-* Talk to pokebot
->   `pokebot> pokebot help`
-
+* Start using pokebot!
+```
+pokebot> pokebot help`
+```
 
 ## Using a local postgres install
 * [Install postgres](http://www.postgresql.org/download/)
 
-* Log in as root
->	`sudo -u postgres psql`
+* Log in to posegres as it's default superuser
+```
+sudo -u postgres psql`
+```
 
-* Make a new user and database for Pokebot
->	`postgres=#	CREATE USER pokebot CREATEDB pokebot CREATEUSER PASSWORD 'oak';`
+* Make a new user named pokebot with database creation privileges
+```
+postgres=#	CREATE USER pokebot CREATEDB CREATEUSER PASSWORD 'oak';
+```
 
-* Exit and log back in as pokebot:
+* Create a new empty database named pokebot for user pokebot to use
+```
+postgres=#	CREATE DATABASE pokebot OWNER pokebot TEMPLATE template0;
+```
 
->	`postgres=#	\q`
+* Exit and log back in as pokebot, enter the password you just made when prompted:
+```
+postgres=#	\q
+$ psql -h localhost -U pokebot
+Password for user pokebot:
+```
 
->	`psql -h localhost -U pokebot`
+* Make sure the pokebot database exists and belongs to pokebot
+```
+postgres=# \l
+
+     Name      |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges   
+---------------+----------+----------+-------------+-------------+-----------------------
+ pokebot       | pokebot  | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+
+(5 rows)
+```
+> If that's all set up correctly, go ahead and exit psql. Sequelize will do the rest.
+```
+postgres=#	\q
+```
+
+> If that's not what you see, consult the [postgres manual](http://www.postgresql.org/docs/).
 
 ##### Database import instructions coming soon
 
