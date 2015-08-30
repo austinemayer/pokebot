@@ -26,8 +26,6 @@ sequelize = new Sequelize(database_uri, {
 	protocol: 'postgres'
 });
 
-console.log(sequelize);
-
 //	Build our reference object
 postgres = {
 	sequelize: sequelize,

@@ -48,6 +48,7 @@ module.exports = function tallGrass (robot) {
 		robot.messageRoom('general', "A wild :" + this_pokemon.name.toLowerCase() + ": " + this_pokemon.name + " has appeared!");
 
 		//	Save the instance to the database
+		//	This shouldn't *actually* save but right now the DB isn't prepopulated and I wanted to run tests on it
 		this_pokemon.save()
 		.then(function(){
 			robot.messageRoom(res.message.user.name, "Pokemon saved as: " + this_pokemon);
