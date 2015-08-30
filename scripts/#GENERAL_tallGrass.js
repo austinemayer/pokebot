@@ -21,7 +21,7 @@ module.exports = function tallGrass (robot) {
 	//	Define requires data models
 	var Models = require('./models'),
 		User = Models.User,
-		Pokemon = Models.Pokemon
+		Pokemon = Models.Pokemon,
 		User_Pokemon = Models.User_Pokemon;
 
 	robot.respond(/(tall\s*grass)$/i, {id: 'tallGrass'}, function (res) {

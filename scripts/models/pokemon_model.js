@@ -1,4 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
+
 	var Pokemon;
 	Pokemon = sequelize.define('Pokemon', {
 		abilities: {
@@ -91,20 +92,19 @@ module.exports = function(sequelize, Sequelize) {
 			hasComment: {type: Sequelize.STRING, field: "Types as JSON object"},
 			fieldWithUnderscores: { type: Sequelize.STRING, field: "types_json" }
 		}
-	}, {
+	},{
+		tableName: 'pokemon',
+		deletedAt: 'deleted_at',
+		freezeTableName: true,
 		paranoid: true,
 		underscored: true,
 		underscoredAll: true,
-		deletedAt: 'deleted_at',
-		tableName: 'pokemon'
+		classMethods: {
+			associate: function(models) {
+				Pokemon.hasMany(models.User_Pokemon, {foreignKey: 'national_id', targetKey: 'national_id', as: 'pokedex_id'});
+			},
+		}
 	});
 
-
-	//	This will force drop on the table if it exists.
-	Pokemon.sync({force: true}).then(function () {
-		//	Table created - Force insert a Pokemon object for testing
-
-	});
-
-	return Pokemon;
+return Pokemon;
 };

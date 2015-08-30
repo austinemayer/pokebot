@@ -20,29 +20,21 @@ module.exports = function(sequelize, Sequelize) {
 			type: Sequelize.STRING,
 			allowNull: false
 		}
-	}, {
+	},
+	{
+		tableName: 'users',
+		deletedAt: 'deleted_at',
+		freezeTableName: true,
 		paranoid: true,
 		underscored: true,
 		underscoredAll: true,
-		deletedAt: 'deleted_at',
-		tableName: 'users'
-	});
-
-	//	This will force drop on the table if it exists.
-	User.sync({force: true}, function(err){
-		if(err){
-			console.error(err);
-			return process.exit(1); 
+		classMethods: {
+			associate: function(models) {
+				User.hasMany(models.User_Pokemon, {foreignKey: 'slack_id', targetKey: 'owner_id', as: 'current_owner'});
+				User.hasMany(models.User_Pokemon, {foreignKey: 'slack_id', targetKey: 'caught_by', as: 'original_owner'});
+			}
 		}
-	}).then(function () {
-		//	Table created - Force insert my user object for testing
-		return User.create({
-			slack_id: 'U09EUDR7G',
-			slack_name: 'Studnicky',
-			slack_role: 'admin'
-		});
 	});
-
 
 	return User;
 };

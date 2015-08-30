@@ -26,6 +26,8 @@ sequelize = new Sequelize(database_uri, {
 	protocol: 'postgres'
 });
 
+console.log(sequelize);
+
 //	Build our reference object
 postgres = {
 	sequelize: sequelize,
@@ -36,8 +38,21 @@ postgres = {
 	User_Pokemon:	sequelize.import(__dirname + '/user_pokemon_model.js')
 };
 
-	/* Associations go here */
+//	Create table associations from models
+Object.keys(postgres).forEach(function(modelName) {
+  if ('associate' in postgres[modelName]) {
+  	console.log(modelName);
+    postgres[modelName].associate(postgres);
+  }
+});
 
-	// global.postgres.User.hasMany(global.postgres.SomethingElse)
+postgres.sequelize.sync({force: true}, function(err){
+	if(err){
+		console.error(err);
+		return process.exit(1); 
+	}
+}).then(function () {
+	console.log("\nSuccessfully created tables\n");
+});
 
 module.exports = postgres;
