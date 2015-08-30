@@ -47,6 +47,7 @@ module.exports = function starter (robot) {
 
 		//	Get what the user gave us...
 		var userQuery = res.match[1].trim() || "";
+		var replyMessage = '';
 
 		//	Play regexplinko with the response...
 		switch (true) {
@@ -55,27 +56,25 @@ module.exports = function starter (robot) {
 				(function(){
 
 					var generations = getGenList();
-					res.send("Generations available to choose from are:\n");
+					replyMessage += "Generations available to choose from are:\n";
 					generations.forEach(function(gen){
-						res.send("•\t" + gen + "\n");
+						replyMessage += "•\t" + gen + "\n";
 					});
-
 				})();
 				break;
 				case (/(^list\s*[1-6](st|nd|rd|th)?|other)/ig.test(userQuery)):
 				(function(){
 
 					var gen = userQuery.match(/[1-6]|other/)[0];
-					res.send("Pokemon available from set " + gen + " are: \n");
+					replyMessage += "Pokemon available from set " + gen + " are: \n";
 					if (gen == "other"){gen = 0;}	//	Set 'other' to 0...
 
 					//	Get the list of starters from the gen selected
 					var starters = getStartersByGen(gen);
 
 					starters.forEach(function(pokemon){
-						res.send("•\t:" + pokemon.toLowerCase() + ": " + pokemon + " \n");
+						replyMessage += "•\t:" + pokemon.toLowerCase() + ": " + pokemon + " \n";
 					});
-
 				})();
 				break;
 				case (/(^list\s*all)/ig.test(userQuery)):
@@ -83,9 +82,9 @@ module.exports = function starter (robot) {
 
 					//	Get the list of starters from the gen selected
 					var starters = getAllStarters();
-					res.send("All starter pokemon available are: \n");
+					replyMessage += "All starter pokemon available are: \n";
 					starters.forEach(function(pokemon){
-						res.send("•\t:" + pokemon.toLowerCase() + ": " + pokemon + " \n");
+						replyMessage += "•\t:" + pokemon.toLowerCase() + ": " + pokemon + " \n";
 					});
 
 				})();
@@ -101,21 +100,22 @@ module.exports = function starter (robot) {
 
 					//	TODO: Store result into user_pokemon table!!!
 
-					res.send("You've selected :" + selected.toLowerCase() + ": " + selected + " as your starter pokemon.\nGreat choice, " + res.message.user.name + "!");
+					replyMessage = "You've selected :" + selected.toLowerCase() + ": " + selected + " as your starter pokemon.\nGreat choice, " + res.message.user.name + "!";
 				} else {
-					res.send("I\'m sorry, " + res.message.user.name + ", but " + selected + " is not available.");
+					replyMessage = "I\'m sorry, " + res.message.user.name + ", but " + selected + " is not available.";
 				}
 
 			})();
 			break;
 			default:
 			var topics = ["starter list generations", "starter list <generation number or 'all'>", "starter pick <pokemon>"];
-
-			res.reply("Use the following commands to pick your starter pokemon.\n");
+			replyMessage = "Use the following commands to pick your starter pokemon.\n";
 			topics.forEach(function(element){
-				res.send("•\t" + element + "\n");
+				replyMessage += "•\t" + element + "\n";
 			});
 		}
+
+		res.send(replyMessage);
 	}
 });
 

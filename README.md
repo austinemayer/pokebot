@@ -77,7 +77,7 @@ pokebot>
 
 * Start using pokebot!
 ```
-pokebot> pokebot help`
+pokebot> pokebot help
 ```
 
 ## Using a local postgres install
@@ -85,7 +85,7 @@ pokebot> pokebot help`
 
 * Log in to posegres as it's default superuser
 ```
-sudo -u postgres psql`
+sudo -u postgres psql
 ```
 
 * Make a new user named pokebot with database creation privileges
