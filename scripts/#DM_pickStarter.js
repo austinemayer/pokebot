@@ -155,40 +155,40 @@ function getAllStarters(){
 	//	TODO: Retrieve starters from database
 	var starter_options = [
 	{gen: "Other Starters", starters: [
-	{name: "Pikachu", national_id: 25},
-	{name: "Eevee", national_id: 133},
-	{name: "Marill", national_id: 183},
-	{name: "Ralts", national_id: 280}
+		{name: "Pikachu", national_id: 25},
+		{name: "Eevee", national_id: 133},
+		{name: "Marill", national_id: 183},
+		{name: "Ralts", national_id: 280}
 	]},
 	{gen: "1st Generation", starters: [
-	{name: "Bulbasaur", national_id: 1},
-	{name: "Charmander", national_id: 4},
-	{name: "Squirtle", national_id: 7}
+		{name: "Bulbasaur", national_id: 1},
+		{name: "Charmander", national_id: 4},
+		{name: "Squirtle", national_id: 7}
 	]},
 	{gen: "2nd Generation", starters: [
-	{name: "Chikorita", national_id: 152},
-	{name: "Cyndaquil", national_id: 155},
-	{name: "Totodile", national_id: 158}
+		{name: "Chikorita", national_id: 152},
+		{name: "Cyndaquil", national_id: 155},
+		{name: "Totodile", national_id: 158}
 	]},
 	{gen: "3rd Generation", starters: [
-	{name: "Treecko", national_id: 252},
-	{name: "Torchic", national_id: 255},
-	{name: "Mudkip", national_id: 258}
+		{name: "Treecko", national_id: 252},
+		{name: "Torchic", national_id: 255},
+		{name: "Mudkip", national_id: 258}
 	]},
 	{gen: "4th Generation", starters: [
-	{name: "Turtwig", national_id: 387},
-	{name: "Chimchar", national_id: 390},
-	{name: "Piplup", national_id: 393}
+		{name: "Turtwig", national_id: 387},
+		{name: "Chimchar", national_id: 390},
+		{name: "Piplup", national_id: 393}
 	]},
 	{gen: "5th Generation", starters: [
-	{name: "Snivy", national_id: 495},
-	{name: "Tepig", national_id: 498},
-	{name: "Oshawott", national_id: 501}
+		{name: "Snivy", national_id: 495},
+		{name: "Tepig", national_id: 498},
+		{name: "Oshawott", national_id: 501}
 	]},
 	{gen: "6th Generation", starters: [
-	{name: "Chespin", national_id: 650},
-	{name: "Fennekin", national_id: 653},
-	{name: "Froakie", national_id: 656}
+		{name: "Chespin", national_id: 650},
+		{name: "Fennekin", national_id: 653},
+		{name: "Froakie", national_id: 656}
 	]}
 	];
 
