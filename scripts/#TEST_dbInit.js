@@ -1,90 +1,48 @@
 //	Description:
-//	Tell oak to DM you
+//		Preload the database
 //
 //	Dependencies:
-//	None
+//		Sequelize
 //
 //	Configuration:
-//	None
+//		None
 //
 //	Commands:
-//	hubot tall grass      - spawn a wild pokemon
+//		None
 //
 //	Author:
-//	Andrew Studnicky
+//		Andrew Studnicky
 
-module.exports = function tallGrass (robot) {
+//	Refer here for making hubot identify present users
 
-	//	Define required modules
-	var Sequelize = require('sequelize');
+//	Define required modules
+var Sequelize = require('sequelize');
 
-	//	Define required data models
-	var Models = require('./models'),
-		User = Models.User,
-		Pokemon = Models.Pokemon,
-		Pokemon_Instance = Models.Pokemon_Instance;
+//	Define requires data models
+var Models = require('./models'),
+	Pokemon = Models.Pokemon;
 
-	//	Recursive self-executing function!
-	//	Start spawning wild pokemon!
-	(function tallGrassLoop(){
-		setTimeout(function(){
-			spawnPokemon(setRarity());
-			tallGrassLoop();
-		}, setTimer());
-	})();
+module.exports = function dbInit (robot) {
 
-	//	Randomize timer between 3 and 5 minutes...
-	function setTimer(){
-		var timer = Math.floor(Math.random() * 120000 + 180000);
-		return timer;
+	robot.respond(/db\s*init?$/i, function (res) {
 
-	};
+		//	Bulk create is undocumented, iterating array for now
+		pokemon_list.forEach(function(this_pokemon){
+			console.log("Building: " + this_pokemon.name);
+			
+			Pokemon.create(this_pokemon)
+			.then(function(){
+				console.log("Stored: " + this_pokemon.name);
+			})
+			.catch(function(error){
+				console.log("Failed: " + this_pokemon.name);
+			});
+		});
 
-	function setRarity(){
-		//	The rarity index should be based on the number of users present in the channel.
-		//	Pending on proper database import.
-		return 1;
-	};
-
-
-	//	Leave this command in as restricted for admins once middleware is in place 
-	robot.respond(/(tall\s*grass(.*))$/i, {id: 'tallGrass'}, function (res) {
-
-		var rarity = res.match[1].replace(/(tall\s*grass)/ig, "").trim() || "";
-		switch (true) {
-		case (parseInt(rarity) >= 0 && parseInt(rarity) <= 255):
-			spawnPokemon(rarity);
-			break;
-		default:
-			res.send('This command spawns a wild pokemon with a rarity index between 0 and 255.');
-		}
-
-	//	Use API to get current active users in room
-
-	//	Generate rarity
-
-	//	Make DB call
-
-	//	Spawn pokemon
+		robot.messageRoom(res.message.user.name, "db init complete. Check data integrity.");
 
 	});
 
-	function spawnPokemon(rarity){
-
-			//	TODO: Logic here to select pokemon from database with appropriate rarity scope
-
-			//	For now, just use a random number to pick an index from static object array
-			var selector = Math.floor(Math.random() * pokemon_list.length);
-
-			var this_pokemon = Pokemon.build(pokemon_list[selector]);
-
-			//	Specify target room because this script is non-reply invoked
-			robot.messageRoom('general', "A wild :" + this_pokemon.name.toLowerCase() + ": " + this_pokemon.name + " has appeared!");
-
-			//	If a pokemon isn't in the DB but gets called, save it.
-			//	These should all safetly fail on SequelizeUniqueConstraintError if they already exist (db init)
-			this_pokemon.save();
-	}
 
 	var pokemon_list = [
 	{

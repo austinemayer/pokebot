@@ -1,7 +1,7 @@
 module.exports = function(sequelize, Sequelize) {
 
-	var User_Pokemon;
-	User_Pokemon = sequelize.define('User_Pokemon', {
+	var Pokemon_Instance;
+	Pokemon_Instance = sequelize.define('Pokemon_Instance', {
 		caught_by: {
 			type: Sequelize.STRING,
 			allowNull: false,
@@ -34,6 +34,12 @@ module.exports = function(sequelize, Sequelize) {
 			allowNull: true,
 			hasComment: {type: Sequelize.STRING, field: "Pokemon individual values as JSON"},
 			fieldWithUnderscores: { type: Sequelize.STRING, field: "iv_json" }
+		},
+		is_shiny: {
+			type: Sequelize.BOOLEAN,
+			allowNull: false,
+			hasComment: {type: Sequelize.STRING, field: "Is this pokemon shiny?"},
+			fieldWithUnderscores: { type: Sequelize.STRING, field: "is_shiny" }
 		},
 		nature: {
 			type: Sequelize.JSON,
@@ -92,7 +98,7 @@ module.exports = function(sequelize, Sequelize) {
 		}
 	},
 	{
-		tableName: 'user_pokemon',
+		tableName: 'pokemon_instance',
 		deletedAt: 'deleted_at',
 		paranoid: true,
 		freezeTableName: true,
@@ -100,12 +106,12 @@ module.exports = function(sequelize, Sequelize) {
 		underscoredAll: true,
 		classMethods: {
 			associate: function(models) {
-				User_Pokemon.belongsTo(models.User, {foreignKey: 'owner_id', targetKey: 'slack_id', as: 'current_owner'});
-				User_Pokemon.belongsTo(models.User, {foreignKey: 'caught_by', targetKey: 'slack_id', as: 'original_owner'});
-				User_Pokemon.belongsTo(models.Pokemon, {foreignKey: 'national_id', targetKey: 'national_id', as: 'pokedex_id'});
+				Pokemon_Instance.belongsTo(models.User, {foreignKey: 'owner_id', targetKey: 'slack_id', as: 'current_owner'});
+				Pokemon_Instance.belongsTo(models.User, {foreignKey: 'caught_by', targetKey: 'slack_id', as: 'original_owner'});
+				Pokemon_Instance.belongsTo(models.Pokemon, {foreignKey: 'national_id', targetKey: 'national_id', as: 'pokedex_id'});
 			},
 		}
 	});
 
-return User_Pokemon;
+return Pokemon_Instance;
 };

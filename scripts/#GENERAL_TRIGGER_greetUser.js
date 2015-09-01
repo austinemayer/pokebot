@@ -17,7 +17,7 @@ module.exports = function greetUser (robot) {
 
 	robot.enter(function (res) {
 		//	TODO:
-		//	read USER database and compare to robot.brain database to see if user has been here before.
+		//	read USER table from postgres and compare to robot.brain database to see if user has been here before.
 
 
 		//	Greet new channel users.

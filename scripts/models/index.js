@@ -31,9 +31,9 @@ postgres = {
 	sequelize: sequelize,
 	Sequelize: Sequelize, 
 	//  Define models as attributes from script files
-	User: 			sequelize.import(__dirname + '/user_model.js'),
-	Pokemon:		sequelize.import(__dirname + '/pokemon_model.js'),
-	User_Pokemon:	sequelize.import(__dirname + '/user_pokemon_model.js')
+	User: 				sequelize.import(__dirname + '/user_model.js'),
+	Pokemon:			sequelize.import(__dirname + '/pokemon_model.js'),
+	Pokemon_Instance:	sequelize.import(__dirname + '/pokemon_instance_model.js')
 };
 
 //	Create table associations from models

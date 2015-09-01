@@ -31,11 +31,11 @@ module.exports = function starter (robot) {
 	//	Define required modules
 	var Sequelize = require('sequelize');
 
-	//	Define requires data models
+	//	Define required data models
 	var Models = require('./models'),
 		User = Models.User,
 		Pokemon = Models.Pokemon,
-		User_Pokemon = Models.User_Pokemon;
+		Pokemon_Instance = Models.Pokemon_Instance;
 
 	robot.respond(/starter(.*)$/i, {id: 'starter.init'}, function (res) {
 
@@ -105,14 +105,14 @@ module.exports = function starter (robot) {
 					replyMessage = "I\'m sorry, " + res.message.user.name + ", but " + selected + " is not available.";
 				}
 
-			})();
+				})();
 			break;
 			default:
-			var topics = ["starter list generations", "starter list <generation number or 'all'>", "starter pick <pokemon>"];
-			replyMessage = "Use the following commands to pick your starter pokemon.\n";
-			topics.forEach(function(element){
-				replyMessage += "•\t" + element + "\n";
-			});
+				var topics = ["starter list generations", "starter list <generation number or 'all'>", "starter pick <pokemon>"];
+				replyMessage = "Use the following commands to pick your starter pokemon.\n";
+				topics.forEach(function(element){
+					replyMessage += "•\t" + element + "\n";
+				});
 		}
 		//	Send the reply message.
 		res.send(replyMessage);

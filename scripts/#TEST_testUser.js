@@ -16,7 +16,7 @@
 //	Refer here for making hubot identify present users
 
 	//	https://api.slack.com/methods/users.list/test
-	//	https://slack.com/api/users.list?token={API TOKEn}&presence=1&pretty=1
+	//	https://slack.com/api/users.list?token={API TOKEN}&presence=1&pretty=1
 
 	//	https://api.slack.com/methods/users.getPresence/test
 	//	https://slack.com/api/users.getPresence?token={API TOKEN}&user={USER ID}&pretty=1
@@ -24,7 +24,7 @@
 //	Refer here for identifying user info
 
 	//	https://api.slack.com/methods/users.info/test
-	// https://slack.com/api/users.info?token=xoxp-9504395826-9504467254-9531521718-1d3f52&user=U09EUDR7G&pretty=1
+	// 	https://slack.com/api/users.info?token={API TOKEN}&user={USER ID}}&pretty=1
 
 //	Define required modules
 var Sequelize = require('sequelize');
@@ -42,8 +42,10 @@ module.exports = function testUser (robot) {
 			return;
 		} else {
 
+		//	TODO::
 		//	Refer for how to get user info + role:
 		//	https://api.slack.com/methods/users.info
+		//	Why is this failing on auth?
 
 		//	Instantiate a new user
 		var this_user = User.build({
@@ -51,8 +53,6 @@ module.exports = function testUser (robot) {
 			slack_name: res.message.user.name,
 			slack_role: "user"
 		});
-
-		console.log(this_user);
 
 		//	Save the instance to the database
 		this_user.save()

@@ -1,5 +1,5 @@
 //	Description:
-//	Retrieve Pokemon data from pokeapi endpoint.
+//	Retrieve Pokemon message from pokeapi endpoint.
 //
 //	Dependencies:
 //	Request
@@ -8,7 +8,7 @@
 //	None
 //
 //	Commands:
-//	hubot pokedex <query> - Return pokedex data from pokeapi.co by name or national pokedex number
+//	hubot pokedex <query> - Return pokedex message from pokeapi.co by name or national pokedex number
 //
 //	Author:
 //	Andrew Studnicky
@@ -19,39 +19,40 @@
 
 module.exports = function pokedex(robot) {
 
-var request = require('request');
-
 	//	Build return request
 	return robot.respond(/pokedex(.*)/i, function(res) {
 
 		//	Only do this in the pokedex channel or DM
 		if (res.message.room == "pokedex" || res.message.room == res.message.user.name) {
 
-			//	Get the user query, remove colons so people can use the emotes for fun
+			//	Get the user query, strip colons if they exist so people can use the emotes for fun
 			var pokemon = res.match[1].replace(/:$/,'').toLowerCase().trim();
 
 			if (pokemon.length > 0) {
-				var endPoint = 'http://pokeapi.co/api/v1/pokemon/' + pokemon;
-				// res.robot.http(endpoint).query(pokemon).get()
-				request( endPoint, function (error, response, body) {
 
-					//	Base the reply on the response status code...
+				//	TODO:: We should have these all in our database, so change these to internal sequelize calls.
+				//	Maybe leave the picture get?
+
+				var api_end_point = 'http://pokeapi.co/api/v1/pokemon/';
+				robot.http(api_end_point).header('Accept', 'application/json').get(pokemon)(function(err, reponse, body) {
+
+				//	Base the reply on the response status code...
 					switch(true){
 						//	Good reply
-						case (response.statusCode == 200):
-							message = parseReply(response.body); 
-							res.send(message);
+						case (reponse.statusCode == 200):
+							reply_message = parseReply(body); 
+							res.send(reply_message);
 						break;
 						//	Server offline?
-						case (response.statusCode >= 300 && response.statusCode < 400):
-							res.reply('I\'m sorry, I seem to have misplaced that data.');
+						case (reponse.statusCode >= 300 && res.statusCode < 400):
+							res.reply('I\'m sorry, I seem to have misplaced that message.');
 						break;
 						//	Unrecognized request
-						case (response.statusCode >= 400 && response.statusCode < 500):
+						case (reponse.statusCode >= 400 && res.statusCode < 500):
 							res.reply('I didn\'t understand you, did you spell that right?');
 						break;
 						//	Internal error
-						case(response.statusCode>=500):
+						case(reponse.statusCode>=500):
 							res.reply('It seems I\'ve forgotten that.');
 						break;
 						//	Unknown bad reply
@@ -67,17 +68,17 @@ var request = require('request');
 	});
 
 	function parseReply(json) {
+		
+		var data = JSON.parse(json);
 
-		pokemonData = JSON.parse(json);
 		//	This is a bit hacky, but it returns the pokemon's picture from the API without making a second call.
-		var data = 'http://pokeapi.co/media/img/' + pokemonData.national_id + '.png\n' + '*Name:*\t\t\t' +  pokemonData.name + '\n\n';
+		var message = 'http://pokeapi.co/media/img/' + data.objects[0].national_id + '.png\n' + '*Name:*\t\t\t' +  data.objects[0].name + '\n\n';
 		//	Types may contain one or two objects, so this has to be a bit weird...
-		//	I should maybe use handlebars...
-		data += '*Type*:\t\t\t';
-		pokemonData.types.map(function(e){
-			data += e.name.charAt(0).toUpperCase() + e.name.slice(1) + ' ';
+		message += '*Type*:\t\t\t';
+		data.objects[0].types.map(function(e){
+			message += e.name.charAt(0).toUpperCase() + e.name.slice(1) + ' ';
 		});
-		data += '\n\n';
+		message += '\n\n';
 		//	Make power level bars for stats because they're fun!
 		[	//	Dict obj sets display strings for keys
 			{attack:"Attack"},
@@ -89,7 +90,7 @@ var request = require('request');
 		].map(function(obj){
 			//	Iterate desired keys, generate string with ASCII powerbar
 			for (var key in obj){
-				var bar_len = pokemonData[key]/10;
+				var bar_len = data.objects[0][key]/10;
 				var bar = '', tabs = '\t', count = 0;
 				do {
 					bar += '█';
@@ -98,11 +99,9 @@ var request = require('request');
 				if (obj[key].length < 14){
 					tabs += "\t";
 				}
-				data += '*' + obj[key] + '*:' + tabs + pokemonData[key] + '\n' + bar + '\n\n';
+				message += '*' + obj[key] + '*:' + tabs + data.objects[0][key] + '\n' + bar + '\n\n';
 			}
 		});
-		return (data);
-
-		
+		return (message);
 	}
 };

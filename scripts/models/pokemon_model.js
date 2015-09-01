@@ -52,6 +52,12 @@ module.exports = function(sequelize, Sequelize) {
 			hasComment: {type: Sequelize.STRING, field: "Is this an available starter pokemon?"},
 			fieldWithUnderscores: { type: Sequelize.STRING, field: "is_starter" }
 		},
+		is_wild: {
+			type: Sequelize.BOOLEAN,
+			allowNull: false,
+			hasComment: {type: Sequelize.STRING, field: "Is this pokemon seen in the wild?"},
+			fieldWithUnderscores: { type: Sequelize.STRING, field: "is_wild" }
+		},
 		male_female_ratio: {
 			type: Sequelize.REAL,
 			allowNull: false,
@@ -112,7 +118,7 @@ module.exports = function(sequelize, Sequelize) {
 		underscoredAll: true,
 		classMethods: {
 			associate: function(models) {
-				Pokemon.hasMany(models.User_Pokemon, {foreignKey: 'national_id', targetKey: 'national_id', as: 'pokedex_id'});
+				Pokemon.hasMany(models.Pokemon_Instance, {foreignKey: 'national_id', targetKey: 'national_id', as: 'pokedex_id'});
 			},
 		}
 	});
