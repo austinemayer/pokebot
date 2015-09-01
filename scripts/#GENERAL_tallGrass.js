@@ -33,15 +33,13 @@ module.exports = function tallGrass (robot) {
 		}, setTimer());
 	})();
 
-	//	Randomize timer between 7.5 and 15 minutes...
+	//	Randomize timer between 6 and 12 minutes...
 	function setTimer(){
-		var timer = Math.floor(Math.random() * 450000 + 450000);
-		return timer;
+		return Math.floor(Math.random() * 360000 + 360000);
 	}
 
 	function setRarity(){
 		//	The rarity index should be based on the number of users present in the channel.
-		//	Pending on proper database import.
 		return 1;
 	}
 
@@ -78,11 +76,16 @@ module.exports = function tallGrass (robot) {
 			var this_pokemon = Pokemon.build(pokemon_list[selector]);
 
 			//	Specify target room because this script is non-reply invoked
-			robot.messageRoom('general', "A wild :" + this_pokemon.name.toLowerCase() + ": " + this_pokemon.name + " has appeared!");
+			robot.messageRoom('general', "Wild :" + this_pokemon.name.toLowerCase() + ": " + this_pokemon.name + " appeared!");
 
 			//	If a pokemon isn't in the DB but gets called, save it.
 			//	These should all safetly fail on SequelizeUniqueConstraintError if they already exist (db init)
 			this_pokemon.save();
+	
+			setTimeout(function escape(){
+				robot.messageRoom('general', "Too slow! :" + this_pokemon.name.toLowerCase() + ": " + this_pokemon.name + " has escaped!");
+			}, Math.floor(Math.random() * 15000 + 10000));	//	Make escape timer factor in pokemon speed rating?
+
 	}
 
 	var pokemon_list = [

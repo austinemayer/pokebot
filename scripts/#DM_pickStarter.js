@@ -37,7 +37,7 @@ module.exports = function starter (robot) {
 		Pokemon = Models.Pokemon,
 		Pokemon_Instance = Models.Pokemon_Instance;
 
-	robot.respond(/starter(.*)$/i, {id: 'starter.init'}, function (res) {
+	robot.respond(/starters?\s*(.*)$/i, {id: 'starter.init'}, function (res) {
 
 		if (res.message.room != res.message.user.name) {
 			res.reply("Please private message me!");
@@ -51,7 +51,7 @@ module.exports = function starter (robot) {
 
 		//	Play regexplinko with the response to build the reply message...
 		switch (true) {
-			case (/(^list\s*generations)/ig).test(userQuery):
+			case (/(^gens|^list\s*generations)/ig).test(userQuery):
 				//	Get the list of generations
 				(function(){
 
@@ -62,7 +62,7 @@ module.exports = function starter (robot) {
 					});
 				})();
 				break;
-				case (/(^list\s*[1-6](st|nd|rd|th)?|other)/ig.test(userQuery)):
+				case (/(^(gen|list)\s*[1-6](st|nd|rd|th)?|other)/ig.test(userQuery)):
 				(function(){
 
 					var gen = userQuery.match(/[1-6]|other/)[0];
