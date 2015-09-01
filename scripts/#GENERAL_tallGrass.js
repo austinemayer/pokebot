@@ -37,14 +37,13 @@ module.exports = function tallGrass (robot) {
 	function setTimer(){
 		var timer = Math.floor(Math.random() * 120000 + 180000);
 		return timer;
-
-	};
+	}
 
 	function setRarity(){
 		//	The rarity index should be based on the number of users present in the channel.
 		//	Pending on proper database import.
 		return 1;
-	};
+	}
 
 
 	//	Leave this command in as restricted for admins once middleware is in place 
