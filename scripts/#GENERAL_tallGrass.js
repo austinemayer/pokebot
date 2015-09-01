@@ -33,9 +33,9 @@ module.exports = function tallGrass (robot) {
 		}, setTimer());
 	})();
 
-	//	Randomize timer between 3 and 5 minutes...
+	//	Randomize timer between 7.5 and 15 minutes...
 	function setTimer(){
-		var timer = Math.floor(Math.random() * 120000 + 180000);
+		var timer = Math.floor(Math.random() * 450000 + 450000);
 		return timer;
 	}
 
