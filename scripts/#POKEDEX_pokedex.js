@@ -17,6 +17,10 @@
 //	https://github.com/inkel/hubot-slack-attachment
 //	https://api.slack.com/docs/attachments
 
+
+	//	Get the utility functions
+	var Utilities = require('./utility');
+
 module.exports = function pokedex(robot) {
 
 	//	Build return request
@@ -28,6 +32,8 @@ module.exports = function pokedex(robot) {
 			//	Get the user query, strip colons if they exist so people can use the emotes for fun
 			var pokemon = res.match[1].replace(/:$/,'').toLowerCase().trim();
 
+			console.log(pokemon);
+
 			if (pokemon.length > 0) {
 
 				//	TODO:: We should have these all in our database, so change these to internal sequelize calls.
@@ -38,33 +44,42 @@ module.exports = function pokedex(robot) {
 
 				//	Base the reply on the response status code...
 					switch(true){
+						
 						//	Good reply
 						case (reponse.statusCode == 200):
 							reply_message = parseReply(body); 
 							res.send(reply_message);
-						break;
+							break;
+						
 						//	Server offline?
 						case (reponse.statusCode >= 300 && res.statusCode < 400):
 							res.reply('I\'m sorry, I seem to have misplaced that message.');
-						break;
+							break;
+						
 						//	Unrecognized request
 						case (reponse.statusCode >= 400 && res.statusCode < 500):
 							res.reply('I didn\'t understand you, did you spell that right?');
-						break;
+							break;
+						
 						//	Internal error
 						case(reponse.statusCode>=500):
 							res.reply('It seems I\'ve forgotten that.');
-						break;
+							break;
+						
 						//	Unknown bad reply
 						case 'default':
 							res.reply('Hmm, try asking again later.');
 					}
 				});
+
 			} else {
+
 				//	Null or no pattern matched.
 				res.reply('Tell me a name or _National Pokedex ID_ of a Pokémon to learn about it!');
+
 			}
 		}
+
 	});
 
 	function parseReply(json) {
@@ -75,8 +90,8 @@ module.exports = function pokedex(robot) {
 		var message = 'http://pokeapi.co/media/img/' + data.objects[0].national_id + '.png\n' + '*Name:*\t\t\t' +  data.objects[0].name + '\n\n';
 		//	Types may contain one or two objects, so this has to be a bit weird...
 		message += '*Type*:\t\t\t';
-		data.objects[0].types.map(function(e){
-			message += e.name.charAt(0).toUpperCase() + e.name.slice(1) + ' ';
+		data.objects[0].types.map(function(o){
+			message += Utilities.proper_capitalize(o.name) + ' ';
 		});
 		message += '\n\n';
 		//	Make power level bars for stats because they're fun!

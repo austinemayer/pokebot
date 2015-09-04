@@ -15,13 +15,12 @@ module.exports = function(sequelize, Sequelize) {
 		},
 		gender: {
 			type: Sequelize.INTEGER,
-			allowNull: false,
-			hasComment: {type: Sequelize.STRING, field: "Pokemon current experience"}
+			hasComment: {type: Sequelize.STRING, field: "Pokemon Gender (NULL=null 0=F 1=M)"}
 		},
 		happiness: {
 			type: Sequelize.INTEGER,
 			allowNull: false,
-			hasComment: {type: Sequelize.STRING, field: "Pokemon variable happiness rating"},
+			hasComment: {type: Sequelize.STRING, field: "Pokemon happiness rating"},
 		},
 		holds_item: {
 			type: Sequelize.JSON,
@@ -51,7 +50,7 @@ module.exports = function(sequelize, Sequelize) {
 			type: Sequelize.INTEGER,
 			allowNull: false,
 			hasComment: {type: Sequelize.STRING, field: "Unique Pokedex ID (National index)"},
-			fieldWithUnderscores: { type: Sequelize.STRING, field: "pokedex_id" }
+			fieldWithUnderscores: { type: Sequelize.STRING, field: "national_id" }
 		},
 		nickname: {
 			type: Sequelize.STRING,

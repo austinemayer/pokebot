@@ -13,8 +13,6 @@
 //	Author:
 //		Andrew Studnicky
 
-//	Refer here for making hubot identify present users
-
 //	Define required modules
 var Sequelize = require('sequelize');
 
@@ -24,7 +22,8 @@ var Models = require('./models'),
 
 module.exports = function dbInit (robot) {
 
-	robot.respond(/db\s*init?$/i, function (res) {
+	//	Manual db init invokation
+	robot.respond(/db\s*init?$/i, {id: 'admin.db.init.manual'}, function dbInitManual (res) {
 
 		//	Bulk create is undocumented, iterating array for now
 		pokemon_list.forEach(function(this_pokemon){
@@ -39,7 +38,7 @@ module.exports = function dbInit (robot) {
 			});
 		});
 
-		robot.messageRoom(res.message.user.name, "db init complete. Check data integrity.");
+		robot.messageRoom(res.message.user.name, "DB init complete. Check data integrity.");
 
 	});
 

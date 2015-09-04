@@ -16,13 +16,6 @@
 
 //	TODO:
 
-//	After user_pokemon table is created, add a check here for the user already has a pokemon.
-//	If they do, skip the entire script.
-
-//	Convert this procedure to an object and instantiate per user
-//	Ensure that the appropriate instance is answering the correct user
-//	Otherwise users may be able to intercept each other's starter script
-
 //	Figure out how to de-register listeners using middleware and listener metadata
 //	https://github.com/github/hubot/blob/master/docs/scripting.md#listener-metadata
 
@@ -37,159 +30,149 @@ module.exports = function starter (robot) {
 		Pokemon = Models.Pokemon,
 		Pokemon_Instance = Models.Pokemon_Instance;
 
+	//	Get the utility functions
+	var Utilities = require('./utility');
+
 	robot.respond(/starters?\s*(.*)$/i, {id: 'starter.init'}, function (res) {
 
 		if (res.message.room != res.message.user.name) {
+
 			res.reply("Please private message me!");
 			return;
 
+		// } else if {
+
+		//	After user_pokemon table is created, add a check here for the user already has a pokemon.
+		//	If they do, tell them no more and skip the entire script.
+		//	return;
+
 		} else {
 
-		//	Get what the user gave us...
-		var userQuery = res.match[1].trim() || "";
-		var replyMessage = '';
+			//	Get what the user gave us - capture group 2 is the important part. If it doesn't exist, pretend it's empty.
+			var userQuery = res.match[1].trim() || null;
+			console.log(userQuery);
 
-		//	Play regexplinko with the response to build the reply message...
-		switch (true) {
-			case (/(^gens|^list\s*generations)/ig).test(userQuery):
-				//	Get the list of generations
-				(function(){
+			//	Play regex-plinko with the response to figure out what to do...
+			switch (true) {
 
-					var generations = getGenList();
-					replyMessage += "Generations available to choose from are:\n";
-					generations.forEach(function(gen){
-						replyMessage += "•\t" + gen + "\n";
+				case (/([1-6])/ig.test(userQuery)):
+					//	Match out the number and call the appropriate query
+					var gen = userQuery.match(/[1-6]/)[0];
+					getStartersByGen(res, gen);
+					break;
+
+				case (/(all|any)/ig.test(userQuery)):
+					//	Call the query to show all available starters
+					getAllStarters(res);
+					break;
+
+				case (/(gen|list\s*(generations)?)/ig).test(userQuery):
+					//	Get a list of generations
+					getGenList(res);
+					break;
+
+				case (/(pick|select)\s*(.*)/ig.test(userQuery)):
+					//	Query DB to see if the user picked a valid starter
+					var pick = userQuery.match[2].trim();
+					pickStarter(res, pick);
+					break;
+
+				default:
+					//	Base command or not understood. The user needs help, so send a help message.
+					var commands = ["starter generations", "starters <generation number or 'all'>", "starters pick <pokemon>"];
+					var replyMessage = "Use the following commands to pick your starter pokemon.\n";
+					commands.forEach(function(element){
+						replyMessage += "•\t" + element + "\n";
 					});
-				})();
-				break;
-				case (/(^(gen|list)\s*[1-6](st|nd|rd|th)?|other)/ig.test(userQuery)):
-				(function(){
+					res.send(replyMessage);
 
-					var gen = userQuery.match(/[1-6]|other/)[0];
-					replyMessage += "Pokemon available from set " + gen + " are: \n";
-					if (gen == "other"){gen = 0;}	//	Set 'other' to 0...
-
-					//	Get the list of starters from the gen selected
-					var starters = getStartersByGen(gen);
-
-					starters.forEach(function(pokemon){
-						replyMessage += "•\t:" + pokemon.toLowerCase() + ": " + pokemon + " \n";
-					});
-				})();
-				break;
-				case (/(^list\s*all)/ig.test(userQuery)):
-				(function(){
-
-					//	Get the list of starters from the gen selected
-					var starters = getAllStarters();
-					replyMessage += "All starter pokemon available are: \n";
-					starters.forEach(function(pokemon){
-						replyMessage += "•\t:" + pokemon.toLowerCase() + ": " + pokemon + " \n";
-					});
-
-				})();
-				break;
-				case (/(^pick\s*.*)/ig.test(userQuery)):
-				(function(){
-
-					var selected = userQuery.substring(4).trim();
-					var starters = getAllStarters();
-
-					//	Capitalize the input or it will fail check
-					if (starters.indexOf(selected.charAt(0).toUpperCase() + selected.slice(1)) != -1){
-
-					//	TODO: Store result into user_pokemon table!!!
-
-					replyMessage = "You've selected :" + selected.toLowerCase() + ": " + selected + " as your starter pokemon.\nGreat choice, " + res.message.user.name + "!";
-				} else {
-					replyMessage = "I\'m sorry, " + res.message.user.name + ", but " + selected + " is not available.";
-				}
-
-				})();
-			break;
-			default:
-				var topics = ["starter list generations", "starter list <generation number or 'all'>", "starter pick <pokemon>"];
-				replyMessage = "Use the following commands to pick your starter pokemon.\n";
-				topics.forEach(function(element){
-					replyMessage += "•\t" + element + "\n";
-				});
+			}
+		
 		}
-		//	Send the reply message.
-		res.send(replyMessage);
-	}
-});
 
-function getGenList(){
-
-	var data = [];
-	starter_options.forEach(function(e){
-		data.push(e.gen);
 	});
 
-	return data.sort();
-}
+	function getGenList(res){
 
-function getStartersByGen(gen){
-
-	var data = [];
-	starter_options[gen].starters.forEach(function(e){
-		data.push(e.name);
-	});
-
-	return data.sort();
-}
-
-function getAllStarters(){
-
-	var data = [];
-	starter_options.forEach(function(e){
-		e.starters.forEach(function(pkmn){
-			data.push(pkmn.name);		
+		Pokemon.findAll({
+			attributes: ['gen'],
+			group: ['gen'],
+			order: [['gen', 'ASC']],
+			where:{
+				is_starter: true
+			}
+		}).then(function(gens){
+			var replyMessage = "Generations available to chose from include:\n";
+			gens.map(function(pokemon){
+				replyMessage += "•\t" + Utilities.numeral_suffix(pokemon.gen) + "\n";
+			});
+			res.send(replyMessage);
+			return;
 		});
-	});
 
-	return data.sort();
-}
+	}
 
-	//	Have this static data at the ready
-	//	TODO: Retrieve starters from database
-	var starter_options = [
-	{gen: "Other Starters", starters: [
-		{name: "Pikachu", national_id: 25},
-		{name: "Eevee", national_id: 133},
-		{name: "Marill", national_id: 183},
-		{name: "Ralts", national_id: 280}
-	]},
-	{gen: "1st Generation", starters: [
-		{name: "Bulbasaur", national_id: 1},
-		{name: "Charmander", national_id: 4},
-		{name: "Squirtle", national_id: 7}
-	]},
-	{gen: "2nd Generation", starters: [
-		{name: "Chikorita", national_id: 152},
-		{name: "Cyndaquil", national_id: 155},
-		{name: "Totodile", national_id: 158}
-	]},
-	{gen: "3rd Generation", starters: [
-		{name: "Treecko", national_id: 252},
-		{name: "Torchic", national_id: 255},
-		{name: "Mudkip", national_id: 258}
-	]},
-	{gen: "4th Generation", starters: [
-		{name: "Turtwig", national_id: 387},
-		{name: "Chimchar", national_id: 390},
-		{name: "Piplup", national_id: 393}
-	]},
-	{gen: "5th Generation", starters: [
-		{name: "Snivy", national_id: 495},
-		{name: "Tepig", national_id: 498},
-		{name: "Oshawott", national_id: 501}
-	]},
-	{gen: "6th Generation", starters: [
-		{name: "Chespin", national_id: 650},
-		{name: "Fennekin", national_id: 653},
-		{name: "Froakie", national_id: 656}
-	]}
-	];
+	function getStartersByGen(res, gen){
+
+		Pokemon.findAll({
+			attributes: ['name'],
+			order: [['name', 'ASC']],
+			where:{
+				is_starter: true,
+				gen: gen,
+			}
+		}).then(function(starters){
+			var replyMessage = "Starter pokemon available from " + Utilities.numeral_suffix(gen) + " Generation are: \n";
+			starters.map(function(pokemon){
+				replyMessage += "•\t:" + pokemon.name.toLowerCase() + ": " + pokemon.name + " \n";
+			});
+			res.send(replyMessage);
+			return;
+		});
+	}
+
+	function getAllStarters(res){
+
+		Pokemon.findAll({
+			attributes: ['name'],
+			order: [['gen', 'ASC'],['name', 'ASC']],
+			where:{
+				is_starter: true,
+			}
+		}).then(function(starters){
+			
+			var replyMessage = "All starter pokemon available are: \n";
+			starters.map(function(pokemon){
+				replyMessage += "•\t:" + pokemon.name.toLowerCase() + ": " + pokemon.name + " \n";
+			});
+			res.send(replyMessage);
+			return;
+		});
+
+	}
+
+	function pickStarter(res, pick){
+
+		Pokemon.findOne({
+			where:{
+				is_starter: true,
+				name: Utilities.proper_capitalize(pick)	//	Force capitalize
+			}
+		}).then(function(starter){
+			var replyMessage = '';
+			if (!starter){
+				replyMessage += "I\'m sorry, " + Utilities.proper_capitalize(res.message.user.name) + ", but " + pick + " is not available as a starter pokemon.";
+			} else {
+				replyMessage += "You\'ve chosen :" + starter.name.toLowerCase() + ": " + starter.name + "!\n";
+				replyMessage += "Great choice, " + Utilities.proper_capitalize(res.message.user.name) + "!";
+
+				//	TODO:: Store into pokemon_instance table
+
+			}
+			res.send(replyMessage);
+			return;
+		});
+
+	}
 
 };

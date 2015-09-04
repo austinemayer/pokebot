@@ -15,15 +15,14 @@
 
 module.exports = function dmMe (robot) {
 
-	//	Define required modules
-	var request = require('request');
-
+	//	Get the utility functions
+	var Utilities = require('./utility');
 
 	robot.respond(/DM\s*me$/i, {id: 'dmMe'}, function (res) {
 
 		//	Demo of sending DM to a user from a response.
 		//	Send to the user channel (A room with channel of user's name is considered DM)
-		robot.messageRoom(res.message.user.name, "Sup, " + (res.message.user.name).charAt(0).toUpperCase() + res.message.user.name.slice(1) + "?");
+		robot.messageRoom(res.message.user.name, "Sup, " + Utilities.proper_capitalize(res.message.user.name) + "?");
 
 		//	Build the channel invite
 		//	https://pokebot.slack.com/api/channels.invite?token={MY_TOKEN}&channel={username}&user={myid}

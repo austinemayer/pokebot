@@ -33,9 +33,9 @@ var Sequelize = require('sequelize');
 var Models = require('./models'),
 User = Models.User;
 
-module.exports = function testUser (robot) {
+module.exports = function getUserInfo (robot) {
 
-	robot.respond(/test\s*users?$/i, function (res) {
+	robot.respond(/user\s*info?$/i, function (res) {
 
 		if (res.message.room != res.message.user.name) {
 			res.reply("Please private message me!");

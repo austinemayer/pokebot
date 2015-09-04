@@ -15,10 +15,13 @@
 
 module.exports = function getInfo (robot) {
 
+	//	Get the utility functions
+	var Utilities = require('./utility');
+	
 	robot.respond(/info(.*)$/i, function (res) {	
 		//	Check the room first, only answer DM or help channel
 		if (res.message.room != "help" || res.message.room != res.message.user.name){
-			robot.messageRoom(res.message.user.name, "I can only answer help questions in the help channel or via private message, @" + (res.message.user.name).charAt(0).toUpperCase() + res.message.user.name.slice(1) + ".");
+			robot.messageRoom(res.message.user.name, "I can only answer help questions in the help channel or via private message, @" + Utilities.proper_capitalize(res.message.user.name) + ".");
 			return;
 		} else {
 
